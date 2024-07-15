@@ -1,0 +1,16 @@
+---
+name: "JellyExplorer"
+guid: "1e69e88e-3347-4164-b1f5-7eee6e08657e"
+version: "1.0.0.0"
+targetAbi: "10.8.0.0"
+framework: "net6.0"
+overview: "Short description about your plugin"
+description: >
+  This is a longer description that can span more than one
+  line and include details about your plugin.
+category: "General"
+owner: "jellyfin"
+artifacts:
+- "Jellyfin.Plugin.JellyExplorer.dll"
+changelog: >
+  changelog
