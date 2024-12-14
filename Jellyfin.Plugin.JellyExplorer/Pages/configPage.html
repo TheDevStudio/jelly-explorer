@@ -1,48 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JellyExplorer</title>
-    <style>
-        .movie-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .movie-item {
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-        }
-        .movie-title {
-            font-weight: bold;
-        }
-        .movie-overview {
-            margin-top: 5px;
-        }
-    </style>
+    <title>JellyExplorer Configuration</title>
 </head>
 <body>
     <div id="JellyExplorerConfigPage" data-role="page" class="page type-interior pluginConfigurationPage">
         <div data-role="content">
             <div class="content-primary">
-                <h2>JellyExplorer - TMDB Movie Search</h2>
-                <form id="tmdbForm">
+                <form id="JellyExplorerConfigForm">
                     <label for="tmdbApiKey">TMDB API Key:</label>
-                    <input type="text" id="tmdbApiKey" name="tmdbApiKey" />
-                    <button type="submit">Save API Key</button>
+                    <input id="tmdbApiKey" name="TmdbApiKey" type="text" required />
+                    <button type="submit">Save</button>
                 </form>
-                <div id="movieSearch">
-                    <h3>Movie Search</h3>
-                    <input type="text" id="searchQuery" placeholder="Enter movie title" />
-                    <button id="searchButton">Search</button>
-                    <div id="searchResults">
-                        <h4>Search Results:</h4>
-                        <ul id="movieList" class="movie-list"></ul>
-                    </div>
-                </div>
             </div>
         </div>
+        <script type="text/javascript">
+            var JellyExplorerConfig = {
+                pluginUniqueId: "53b691fd-9675-fb3e-c72a-7855259d1ddc"
+            };
+
+            $('#JellyExplorerConfigPage').on('pageshow', function () {
+                Dashboard.showLoadingMsg();
+                ApiClient.getPluginConfiguration(JellyExplorerConfig.pluginUniqueId).then(function (config) {
+                    $('#tmdbApiKey').val(config.TmdbApiKey);
+                    Dashboard.hideLoadingMsg();
+                });
+            });
+
+            $('#JellyExplorerConfigForm').on('submit', function (e) {
+                e.preventDefault();
+                Dashboard.showLoadingMsg();
+                ApiClient.getPluginConfiguration(JellyExplorerConfig.pluginUniqueId).then(function (config) {
+                    config.TmdbApiKey = $('#tmdbApiKey').val();
+                    ApiClient.updatePluginConfiguration(JellyExplorerConfig.pluginUniqueId, config).then(function (result) {
+                        Dashboard.processPluginConfigurationUpdateResult(result);
+                    });
+                });
+            });
+        </script>
     </div>
-    <script src="configPagejs"></script>
 </body>
 </html>

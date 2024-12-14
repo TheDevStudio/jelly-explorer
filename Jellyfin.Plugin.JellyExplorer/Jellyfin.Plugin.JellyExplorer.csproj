@@ -1,21 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Jellyfin.Plugin.JellyExplorer</RootNamespace>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Jellyfin.Controller" Version="10.8.9" />
     <PackageReference Include="Jellyfin.Model" Version="10.8.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Transmission.API.RPC" Version="2.1.2" />
   </ItemGroup>
+
   <ItemGroup>
     <None Remove="Pages\configPage.html" />
     <EmbeddedResource Include="Pages\configPage.html" />
     <None Remove="Pages\configPage.js" />
     <EmbeddedResource Include="Pages\configPage.js" />
   </ItemGroup>
+
 </Project>
