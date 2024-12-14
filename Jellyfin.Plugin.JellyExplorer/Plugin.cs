@@ -1,49 +1,41 @@
-using System.Globalization;
-using Jellyfin.Plugin.JellyExplorer.Configuration;
+using System;
+using System.Collections.Generic;
+using Jellyfin.Plugin.JellyExplorer.Models;
 using MediaBrowser.Common.Configuration;
 using MediaBrowser.Common.Plugins;
 using MediaBrowser.Model.Plugins;
 using MediaBrowser.Model.Serialization;
 
-namespace Jellyfin.Plugin.JellyExplorer;
-
-/// <summary>
-/// The main plugin.
-/// </summary>
-public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
+namespace Jellyfin.Plugin.JellyExplorer
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="Plugin"/> class.
-    /// </summary>
-    /// <param name="applicationPaths">Instance of the <see cref="IApplicationPaths"/> interface.</param>
-    /// <param name="xmlSerializer">Instance of the <see cref="IXmlSerializer"/> interface.</param>
-    public Plugin(IApplicationPaths applicationPaths, IXmlSerializer xmlSerializer)
-        : base(applicationPaths, xmlSerializer)
+    public class JellyExplorerPlugin : BasePlugin<PluginConfiguration>, IHasWebPages
     {
-        Instance = this;
-    }
-
-    /// <inheritdoc />
-    public override string Name => "JellyExplorer";
-
-    /// <inheritdoc />
-    public override Guid Id => Guid.Parse("1e69e88e-3347-4164-b1f5-7eee6e08657e");
-
-    /// <summary>
-    /// Gets the current plugin instance.
-    /// </summary>
-    public static Plugin? Instance { get; private set; }
-
-    /// <inheritdoc />
-    public IEnumerable<PluginPageInfo> GetPages()
-    {
-        return new[]
+        public JellyExplorerPlugin(IApplicationPaths applicationPaths, IXmlSerializer xmlSerializer)
+            : base(applicationPaths, xmlSerializer)
         {
-            new PluginPageInfo
+            Instance = this;
+        }
+
+        public override string Name => "JellyExplorer";
+        public override Guid Id => Guid.Parse("f1c1b09f-6f1b-4e1c-b9d9-e1f4b4d4f1c1");
+        public override string Description => "A plugin for Jellyfin";
+        public static JellyExplorerPlugin? Instance { get; private set; }
+
+        public IEnumerable<PluginPageInfo> GetPages()
+        {
+            return new[]
             {
-                Name = this.Name,
-                EmbeddedResourcePath = string.Format(CultureInfo.InvariantCulture, "{0}.Configuration.Resources.configPage.html", GetType().Namespace)
-            }
-        };
+                new PluginPageInfo
+                {
+                    Name = "jellyexplorer",
+                    EmbeddedResourcePath = GetType().Namespace + ".Pages.configPage.html",
+                },
+                new PluginPageInfo
+                {
+                    Name = "configPagejs",
+                    EmbeddedResourcePath = GetType().Namespace + ".Pages.configPage.js"
+                }
+            };
+        }
     }
 }
